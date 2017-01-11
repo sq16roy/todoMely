@@ -1,0 +1,30 @@
+<Section class="container">
+  <header class="pager">
+        <h1 class="text-center display-1">Search </h1>
+    </header>
+    <div class="page-header well">
+        <div class="row">
+            <div class="col-md-4"> 
+                <label>Name:</label>
+                <input type="text" ng-model="myUserName" ng-change="showingData(myUserName)" placeholder="Your user name" required="" class="ng-dirty ng-valid-parse ng-touched ng-not-empty ng-valid ng-valid-required">
+            </div>
+            <div class="form-group col-xs-3" ng-if="showSelects">
+                <label for="sel1">Project Name:</label>
+                <select class="fomr-control" ng-model="selectedName" ng-change="showingSubTeamData(selectedName)">
+                    <option selected>Select one</option>
+                    <option ng-repeat="project in tempProjects" value="{{project.name}}">{{project.name}}</option>
+                </select>
+            </div>
+            <div class="form-group col-xs-3" ng-hide="tempSubTeam == '' || tempSubTeam == undefined">
+                <label for="sel1">SubTeam:</label>
+                <select class="form-control" id="subTeam" ng-model="subteam">
+                    <option selected>Select one</option>
+                    <option ng-repeat="sub in tempSubTeam" value="{{sub}}">{{sub}}</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="scdSbm">
+				<input type="submit" value="Submit" class="btn btn-success center-block" ng-if="subteam != 'Select one'" ng-click="searchList(selectedName, subteam)">
+			</div>
+</Section>

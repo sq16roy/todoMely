@@ -1,0 +1,32 @@
+<Section class="container">
+  <header class="pager">
+        <h1 class="text-center display-1">Add New Projects</h1>
+    </header>
+    <div class="page-header well">
+        <div class="row">
+            <div class="col-md-4"> 
+                <label>Name:</label>
+                <input type="text" ng-model="newUsername" ng-change="showSubmit(newUsername,newProjectName)" placeholder=" Your user name" required="" class="ng-dirty ng-valid-parse ng-touched ng-not-empty ng-valid ng-valid-required">
+            </div>
+            <div class="col-md-4" ng-hide="!newUsername">
+                <label>Project Name:</label>
+                <input type="text" ng-model="newProjectName" ng-change="toLowercaseName()" placeholder=" Name of the project" required="" class="ng-touched ng-not-empty ng-dirty ng-valid-parse ng-valid ng-valid-required">
+            </div>
+            <div class="form-group col-xs-3" ng-hide="!newProjectName">
+                <label for="sel1">SubTeam:</label>
+                <select class="form-control" id="subTeam" ng-model="subteamNew" ng-change="subTeamError = false">
+                    <option selected>Select one</option>
+                    <option value="Front-end">Front-end</option>
+                    <option value="Back-end">Back-end</option>
+                    <option value="CMS">CMS</option>
+                </select>
+            </div>
+        </div>
+        <div class="scdSbm">
+            <input type="submit" value="Submit" class="btn btn-success center-block" ng-hide="subteamNew == 'Select one'" ng-click="submitNew(newUsername,newProjectName,subteamNew)">
+        </div>
+    </div>
+    <div class="alert alert-danger" ng-show="subTeamError">
+        <strong>SubTeam!</strong> Already in use.
+    </div>
+</Section>

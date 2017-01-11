@@ -1,0 +1,94 @@
+<div class="container">
+    <div class="page-header">
+        <h1>
+            To Do List
+            <span class="label label-default" ng-class="warningLevel()" ng-hide="incompleteCount() == 0">{{incompleteCount()}}</span>
+        </h1>
+    </div>
+    
+    <div class="panel">
+        <div class="input-group">
+            <input type="text" class="form-control" ng-model="myNewName" ng-class="validate" ng-change="warningInput()">
+            <span class="input-group-btn">
+                <button class="btn btn-info" ng-click="add(myNewName)">Add</button>
+            </span>
+             <span class="errorMessage" ng-show="validate">Required field</span>
+        </div>
+        <!--end input groupt-->
+        <div class="form-group">
+            <label for="search">Search:</label>
+            <input type="text" class="form-control col-md-3" ng-model="userSearch" placeholder="Search" id="search">
+        </div>
+        <div class="well">
+            <div class="checkbox">
+                <label for="">
+                     <input type="checkbox" ng-model="showList">
+                     View Full Mode
+                </label>
+            </div>
+        </div>
+        <table class="table table-striped" ng-if="showList">
+            <thead>
+                <tr>
+                    <th style="cursor: pointer;" ng-click="orderBy('d')">Description</th>
+                    <th>Done</th>
+                    <th style="cursor: pointer;" ng-click="orderBy('s')">State</th>
+                    <th>Delete</th>
+                    <th>Edit</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="item in todo | filter:userSearch  track by $index">
+                    <td>{{item.actions}}</td>
+                    <td>
+                        <input type="checkbox" ng-model="item.done" ng-change="state(item.done, $index)">
+                    </td>
+                    <td>{{item.state}}</td>
+                    <td>
+                        <button class="btn btn-danger" ng-click="delete($index)">Delete</button>
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal" ng-click="edit(item)">Edit</button>
+                    </td>
+                </tr>
+                    <!-- Modal -->
+                <div class="modal fade" id="myModal" role="dialog">
+                    <div class="modal-dialog">
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                <h4 class="modal-title">{{tempEditInfo}}</h4>
+                            </div>
+                            <div class="modal-body">
+                                <form role="form">
+                                    <div class="form-group">
+                                        <label for="name">Task:</label>
+                                        <input type="text" class="form-control" id="name" ng-model="tempEditInfo">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="pwd">State:</label>
+                                        <input type="checkbox" id="pwd" ng-model="tempState">
+                                    </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="saveEdit()">Save</button>
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                        </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </tbody>
+        </table>
+        <!--list-->
+        <ol ng-if="showList === false">
+            <li ng-repeat="item in todo | filter:userSearch | orderBy:sortType:sortReverse track by $index">
+                {{item.actions}}
+                <span ng-if="item.done">(Done)</span>
+            </li>
+        </ol>
+        <!--end list-->
+    </div>
+    <!-- end panel-->
+</div>
